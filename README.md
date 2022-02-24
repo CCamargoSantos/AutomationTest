@@ -39,6 +39,8 @@ root                    (project root folder)
 ## Required Technologies
 ---
 * Python 3.8.0
+* Python installed selenium (full) package
+* Python installed keyboard (full) package
 * chromedriver.exe (must be in the same folder of the runing script)
 
 ## Authors

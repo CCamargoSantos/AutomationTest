@@ -1,4 +1,4 @@
-from xmlrpc.client import Boolean
+
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import TimeoutException
@@ -7,7 +7,7 @@ import selenium.webdriver.support.ui as ui
 import selenium.webdriver.support.expected_conditions as ec
 import os
 import time
-
+import keyboard
 
 
 class xboxaplicationsTest():
@@ -61,7 +61,7 @@ class xboxaplicationsTest():
             i+=1
             titles.append(allitmes)
         a = i/90
-        print(f'There are {i/a} elements in the first page')
+        print(f'There are {i/a:.0f} elements in the first page')
         #print(titles)
         time.sleep(3)
         
@@ -74,7 +74,7 @@ class xboxaplicationsTest():
             i+=1
             titles.append(allitmes)
         a = i/90
-        print(f'There are {i/a} elements in the second page')
+        print(f'There are {i/a:.0f} elements in the second page')
         #print(titles)
         time.sleep(3)
         
@@ -87,7 +87,7 @@ class xboxaplicationsTest():
             i+=1
             titles.append(allitmes)
         a = i/90
-        print(f'There are {i/a} elements in the third page')
+        print(f'There are {i/a:.0f} elements in the third page')
         #print(titles)
         time.sleep(3)
 
@@ -100,7 +100,7 @@ class xboxaplicationsTest():
             titles.append(allitmes)
         element = titles[0]
         element.click()
-        time.sleep(10)
+        time.sleep(5)
         
         #Handle Registering pop up and close it
         try:
@@ -112,17 +112,20 @@ class xboxaplicationsTest():
         #Click on 3 dot button and add the item to the shopping cart 
         elements = self.driver.find_element(by=By.CSS_SELECTOR,value= '#ButtonPanel_buttonPanel_OverflowMenuTrigger')
         self.driver.find_element(by=By.CSS_SELECTOR,value= '#ButtonPanel_buttonPanel_OverflowMenuTrigger').click()
-        elements.find_elements(by = By.LINK_TEXT, value = 'Agregar al carro').click()
+        keyboard.send('tab')
+        keyboard.send('tab')
+        keyboard.send('enter')
+        time.sleep(5)
 
         #Open the shopping cart and eliminate the item
         ui.WebDriverWait(self.driver,15).until(ec.visibility_of_element_located((By.CSS_SELECTOR,'#store-cart-root > div > div > div > section.main--klSNnr0K > div > div > div > div > div > div.itemDetailsAndLegal--ULuWkT5t > div.item-details > div.item-quantity-price > div.item-quantity > div > div:nth-child(2)')))
         element = self.driver.find_element(by = By.CSS_SELECTOR,value ='#store-cart-root > div > div > div > section.main--klSNnr0K > div > div > div > div > div > div.itemDetailsAndLegal--ULuWkT5t > div.item-details > div.item-quantity-price > div.item-quantity > div > div:nth-child(2)')
-        print(element.text)
+        print(f'You have {element.text} element in the shopping cart')
         time.sleep(5)
         self.driver.find_element(by= By.CSS_SELECTOR,value= '#store-cart-root > div > div > div > section.main--klSNnr0K > div > div > div > div > div > div.itemDetailsAndLegal--ULuWkT5t > div.legalAndStatementContainer--dz8EQOG7 > div > button:nth-child(1)').click()
         ui.WebDriverWait(self.driver,15).until(ec.visibility_of_element_located((By.CSS_SELECTOR,'#store-cart-root > div > div > div > section.main--klSNnr0K > p')))
-        element = self.driver.find_element(y= By.CSS_SELECTOR,value= '#store-cart-root > div > div > div > section.main--klSNnr0K > p')
-        print(element.text)
+        element = self.driver.find_element(by= By.CSS_SELECTOR,value= '#store-cart-root > div > div > div > section.main--klSNnr0K > p')
+        print(f'Spanish message after erase the item in the shopping cart: "{element.text}"')
 
 
 if __name__ == "__main__":
